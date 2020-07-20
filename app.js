@@ -1,7 +1,10 @@
+const cors = require("cors");
 const express = require("express");
 
-const cors = require("cors");
-const courses = require("./courses");
+//data
+let courses = require("./courses");
+
+//create express app instance
 const app = express();
 
 app.use(cors());
@@ -12,6 +15,10 @@ app.get("/", (req, res) => {
 
 app.get("/courses", (req, res) => {
   res.json(courses);
+});
+
+app.delete("/coueses/1", (req, res) => {
+  courses = courses.filter((course) => course.id !== 1);
 });
 
 app.listen(8000, () => {
