@@ -17,8 +17,15 @@ app.get("/courses", (req, res) => {
   res.json(courses);
 });
 
-app.delete("/coueses/1", (req, res) => {
-  courses = courses.filter((course) => course.id !== 1);
+app.delete("/coueses/courseId", (req, res) => {
+  const { courseId } = req.params;
+  const foundCourse = courses.find((course) => course.id === +courseId);
+  if (foundCourse) {
+    courses = courses.filter((_course) => _course.id !== foundCourse);
+    res.status(204).end();
+  } else {
+    res.status(404).jason({ message: "course not found" });
+  }
 });
 
 app.listen(8000, () => {

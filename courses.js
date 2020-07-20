@@ -1,6 +1,6 @@
 const courses = [
   {
-    id: 5,
+    id: 1,
     name: "crayons color course",
     slug: "crayons-color-course",
     price: 95,
@@ -9,7 +9,7 @@ const courses = [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSr9oJorXrtMuwSQC-olZje12Nt2S-1e-Vpdg&usqp=CAU",
   },
   {
-    id: 6,
+    id: 2,
     name: "how to draw course",
     slug: "how-to-draw-coursee",
     price: 100,
