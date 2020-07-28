@@ -1,6 +1,13 @@
-const cors = require("cors");
 const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
+//DB
+const db = require("./db");
+const { Course } = require("./db/models");
+
+// Routes
+const courseRoutes = require("./routes/courses");
 //data
 let courses = require("./courses");
 
@@ -8,24 +15,35 @@ let courses = require("./courses");
 const app = express();
 
 app.use(cors());
-app.get("/", (req, res) => {
-  console.log("HELLO");
-  res.json({ message: "Hello World" });
+app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+  console.log("I'm a middleware method");
+  next();
 });
 
-app.get("/courses", (req, res) => {
-  res.json(courses);
-});
+//Routers
+app.use("/courses", courseRoutes);
 
-app.delete("/coueses/courseId", (req, res) => {
-  const { courseId } = req.params;
-  const foundCourse = courses.find((course) => course.id === +courseId);
-  if (foundCourse) {
-    courses = courses.filter((_course) => _course.id !== foundCourse);
-    res.status(204).end();
-  } else {
-    res.status(404).jason({ message: "course not found" });
+const run = async () => {
+  try {
+    await db.sync();
+  } catch (error) {
+    console.log("run -> error", error);
   }
+};
+
+run();
+
+//Not Found Paths
+app.use((req, res, next) => {
+  res.status(404).json({ message: "path Found" });
+});
+
+//Error handeling middleware
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.json(err.message || "Internal Server Error");
 });
 
 app.listen(8000, () => {
