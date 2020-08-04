@@ -1,7 +1,6 @@
 const slugify = require("slugify");
 
 //data
-let courses = require("../courses");
 const { Course } = require("../db/models");
 
 exports.fetchCourse = async (courseId, next) => {
@@ -26,6 +25,11 @@ exports.courseList = async (req, res, next) => {
 
 exports.courseCreate = async (req, res, next) => {
   try {
+    if (require.file) {
+      req.body.image = `${req.protocol}://${req.get("host")}/media/${
+        req.file.filename
+      }`;
+    }
     const newCourse = await Course.create(req.body);
     res.status(201).json(newCourse);
   } catch (error) {
@@ -35,6 +39,12 @@ exports.courseCreate = async (req, res, next) => {
 
 exports.courseUpdate = async (req, res, next) => {
   try {
+    if (req.file) {
+      req.body.image = `${req.protocol}://${req.get("host")}/media/${
+        req.file.filename
+      }`;
+    }
+
     await req.course.update(req.body);
     res.status(204).end();
   } catch (error) {
@@ -46,7 +56,7 @@ exports.courseDelete = async (req, res, next) => {
   try {
     await req.course.destroy();
     res.status(204).end();
-  } catch (err) {
+  } catch (error) {
     next(error);
   }
 };

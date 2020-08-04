@@ -1,8 +1,6 @@
-const { DataTypes, Model, Sequelize } = require("sequelize");
+const { DataTypes, Model } = require("sequelize");
 const SequelizeSlugify = require("sequelize-slugify");
 const db = require("../db");
-const slugify = require("slugify");
-// const { import } = require("../db");
 
 class Course extends Model {}
 
@@ -15,11 +13,11 @@ Course.init(
     slug: {
       type: DataTypes.STRING,
       unique: true,
-      allowNull: false,
+      // allowNull: false,
     },
     description: {
       type: DataTypes.STRING,
-      allowNull: false,
+      // allowNull: false,
     },
     price: {
       type: DataTypes.INTEGER,
@@ -28,7 +26,7 @@ Course.init(
     },
     image: {
       type: DataTypes.STRING,
-      allowNull: false,
+      // allowNull: false,
     },
   },
   {
@@ -36,8 +34,8 @@ Course.init(
   }
 );
 
-// SequelizeSlugify.slugifyModle(Course, {
-//   source: ["name"],
-// });
+SequelizeSlugify.slugifyModel(Course, {
+  source: ["name"],
+});
 
 module.exports = Course;
