@@ -2,6 +2,7 @@ const express = require("express");
 
 //Controllers
 const {
+  courseCreate,
   instituteCreate,
   instituteList,
   instituteUpdate,
@@ -19,9 +20,10 @@ router.param("instituteId", async (req, res, next, instituteId) => {
   const institute = await fetchInstitute(instituteId, next);
   if (institute) {
     req.institute = institute;
+    console.log(req.institute);
     next();
   } else {
-    const err = new Error("Institutenot found");
+    const err = new Error("Institute not found");
     err.status = 404;
     next(err);
   }
@@ -38,5 +40,8 @@ router.put("/:instituteId", upload.single("image"), instituteUpdate);
 
 //delete institute
 router.delete("/:instituteId", instituteDelete);
+
+// create course
+router.post("/:instituteId/courses", upload.single("image"), courseCreate);
 
 module.exports = router;

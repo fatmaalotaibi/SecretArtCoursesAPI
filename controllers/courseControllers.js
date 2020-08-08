@@ -1,7 +1,7 @@
 const slugify = require("slugify");
 
 //data
-const { Course } = require("../db/models");
+const { Course, Institute } = require("../db/models");
 
 exports.fetchCourse = async (courseId, next) => {
   try {
@@ -15,23 +15,14 @@ exports.fetchCourse = async (courseId, next) => {
 exports.courseList = async (req, res, next) => {
   try {
     const _courses = await Course.findAll({
-      attributes: { exclude: ["createdAt", "updatedAt"] },
+      attributes: { exclude: ["createdAt", "instituteId", "updatedAt"] },
+      include: {
+        model: Institute,
+        as: "institute",
+        attributes: ["name"],
+      },
     });
     res.json(_courses);
-  } catch (error) {
-    next(error);
-  }
-};
-
-exports.courseCreate = async (req, res, next) => {
-  try {
-    if (req.file) {
-      req.body.image = `${req.protocol}://${req.get("host")}/media/${
-        req.file.filename
-      }`;
-    }
-    const newCourse = await Course.create(req.body);
-    res.status(201).json(newCourse);
   } catch (error) {
     next(error);
   }

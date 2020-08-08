@@ -2,7 +2,6 @@ const express = require("express");
 
 //Controllers
 const {
-  courseCreate,
   courseList,
   courseUpdate,
   courseDelete,
@@ -29,9 +28,6 @@ router.param("courseId", async (req, res, next, courseId) => {
 
 // Course List
 router.get("/", courseList);
-
-// create course
-router.post("/", upload.single("image"), courseCreate);
 
 // update course
 router.put("/:courseId", upload.single("image"), courseUpdate);
