@@ -1,43 +1,43 @@
 const slugify = require("slugify");
 
 //data
-const { Course } = require("../db/models");
+const { Institute } = require("../db/models");
 
-exports.fetchCourse = async (courseId, next) => {
+exports.fetchInstitute = async (instituteId, next) => {
   try {
-    const course = await Course.findByPk(courseId);
-    return course;
+    const institute = await Institute.findByPk(instituteId);
+    return institute;
   } catch (error) {
     next(error);
   }
 };
 
-exports.courseList = async (req, res, next) => {
+exports.instituteList = async (req, res, next) => {
   try {
-    const _courses = await Course.findAll({
+    const _institutes = await Institute.findAll({
       attributes: { exclude: ["createdAt", "updatedAt"] },
     });
-    res.json(_courses);
+    res.json(_institutes);
   } catch (error) {
     next(error);
   }
 };
 
-exports.courseCreate = async (req, res, next) => {
+exports.instituteCreate = async (req, res, next) => {
   try {
     if (req.file) {
       req.body.image = `${req.protocol}://${req.get("host")}/media/${
         req.file.filename
       }`;
     }
-    const newCourse = await Course.create(req.body);
-    res.status(201).json(newCourse);
+    const newInstitute = await Institute.create(req.body);
+    res.status(201).json(newInstitute);
   } catch (error) {
     next(error);
   }
 };
 
-exports.courseUpdate = async (req, res, next) => {
+exports.instituteUpdate = async (req, res, next) => {
   try {
     if (req.file) {
       req.body.image = `${req.protocol}://${req.get("host")}/media/${
@@ -45,16 +45,16 @@ exports.courseUpdate = async (req, res, next) => {
       }`;
     }
 
-    await req.course.update(req.body);
+    await req.institute.update(req.body);
     res.status(204).end();
   } catch (error) {
     next(error);
   }
 };
 
-exports.courseDelete = async (req, res, next) => {
+exports.instituteDelete = async (req, res, next) => {
   try {
-    await req.course.destroy();
+    await req.institute.destroy();
     res.status(204).end();
   } catch (error) {
     next(error);

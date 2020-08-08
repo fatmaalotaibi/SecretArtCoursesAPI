@@ -9,6 +9,7 @@ const { Course } = require("./db/models");
 
 // Routes
 const courseRoutes = require("./routes/courses");
+const instituteRoutes = require("./routes/institutes");
 
 //data
 let courses = require("./courses");
@@ -21,6 +22,7 @@ app.use(bodyParser.json());
 
 //Routers
 app.use("/courses", courseRoutes);
+app.use("/institutes", instituteRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));
 
 //Not Found Paths
@@ -38,7 +40,7 @@ app.use((err, req, res, next) => {
 
 const run = async () => {
   try {
-    await db.sync();
+    await db.sync({ alter: true });
   } catch (error) {
     console.log("run -> error", error);
   }

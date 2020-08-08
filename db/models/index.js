@@ -1,3 +1,7 @@
 const Course = require("./Course");
+const Institute = require("./Institute");
 
-module.exports = { Course };
+// an institute has many courses
+Institute.hasMany(Course, { foreignKey: "instituteId" });
+
+module.exports = { Course, Institute };
