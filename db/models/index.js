@@ -1,5 +1,6 @@
 const Course = require("./Course");
 const Institute = require("./Institute");
+const User = require("./User");
 
 // an institute has many courses
 Institute.hasMany(Course, {
@@ -9,4 +10,4 @@ Institute.hasMany(Course, {
 });
 
 Course.belongsTo(Institute, { as: "institute" });
-module.exports = { Course, Institute };
+module.exports = { Course, Institute, User };
