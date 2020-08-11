@@ -4,6 +4,9 @@ const jwt = require("jsonwebtoken");
 //db
 const { User } = require("../db/models");
 
+//config
+const { JWT_SECRET, JWT_EXPIRATION_MS } = require("../config/keys");
+
 exports.signup = async (req, res, next) => {
   const { password } = req.body;
   const saltRounds = 10;
@@ -26,8 +29,8 @@ exports.signin = (req, res) => {
     email: user.email,
     firstName: user.firstName,
     lastName: user.lastName,
-    expires: Date.now() + 900000, // the token will expire 15 minutes from when it's generated
+    expires: Date.now() + parseInt(JWT_EXPIRATION_MS), // the token will expire 15 minutes from when it's generated
   };
-  const token = jwt.sign(JSON.stringify(payload), "asupersecretkey");
+  const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
   res.json({ token });
 };
