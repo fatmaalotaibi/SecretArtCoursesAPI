@@ -21,12 +21,12 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(userRoutes);
 
 //Routers
 app.use("/courses", courseRoutes);
 app.use("/institutes", instituteRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));
+app.use(userRoutes);
 
 // Passport Strategies
 const { localStrategy } = require("./middleware/passport");
