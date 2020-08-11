@@ -31,9 +31,10 @@ app.use(userRoutes);
 // Passport Strategies
 const { localStrategy } = require("./middleware/passport");
 
-//Passport setup
+//Passport
 app.use(passport.initialize());
 passport.use(localStrategy);
+passport.use(jwtStrategy);
 
 //Not Found Paths
 app.use((req, res, next) => {

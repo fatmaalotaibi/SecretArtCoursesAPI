@@ -33,7 +33,12 @@ router.param("instituteId", async (req, res, next, instituteId) => {
 router.get("/", instituteList);
 
 // create institute
-router.post("/", upload.single("image"), instituteCreate);
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  instituteCreate
+);
 
 // update institute
 router.put("/:instituteId", upload.single("image"), instituteUpdate);
