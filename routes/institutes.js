@@ -41,12 +41,26 @@ router.post(
 );
 
 // update institute
-router.put("/:instituteId", upload.single("image"), instituteUpdate);
+router.put(
+  "/:instituteId",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  instituteUpdate
+);
 
 //delete institute
-router.delete("/:instituteId", instituteDelete);
+router.delete(
+  "/:instituteId",
+  passport.authenticate("jwt", { session: false }),
+  instituteDelete
+);
 
 // create course
-router.post("/:instituteId/courses", upload.single("image"), courseCreate);
+router.post(
+  "/:instituteId/courses",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  courseCreate
+);
 
 module.exports = router;
