@@ -1,5 +1,6 @@
 const LocalStrategy = require("passport-local").Strategy;
 const JWTStrategy = require("passport-jwt").Strategy;
+const { JWT_SECRET, JWT_EXPIRATION_MS } = require("../config/keys");
 const { fromAuthHeaderAsBearerToken } = require("passport-jwt").ExtractJwt;
 const bcrypt = require("bcrypt");
 

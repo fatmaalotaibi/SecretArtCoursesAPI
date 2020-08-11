@@ -12,14 +12,14 @@ User.init(
         args: true,
         msg: "Username already exists",
       },
+      role: {
+        type: DataTypes.STRING,
+        defaultValue: "customer",
+      },
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    role: {
-      type: DataTypes.STRING,
-      defaultValue: "customer",
     },
   },
   {

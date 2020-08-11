@@ -20,7 +20,7 @@ exports.instituteList = async (req, res, next) => {
         {
           model: Course,
           as: "courses",
-          attributes: { exclude: ["createdAt", "updatedAt"] },
+          attributes: ["id"],
         },
       ],
     });

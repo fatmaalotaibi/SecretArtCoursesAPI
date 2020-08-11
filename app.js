@@ -3,6 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
 const passport = require("passport");
+const jwtStrategy = require("passport-jwt").Strategy;
 
 //DB
 const db = require("./db");
