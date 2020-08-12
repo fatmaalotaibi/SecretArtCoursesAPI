@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 //db
-const { User } = require("../db/models");
+const { User, Institute } = require("../db/models");
 
 //config
 const { JWT_SECRET, JWT_EXPIRATION_MS } = require("../config/keys");
@@ -19,6 +19,7 @@ exports.signup = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+  // const institute = await Institute.findOne({ where: { userId: user.id } });
   const newUser = await User.create(req.body);
   const payload = {
     id: newUser.id,
@@ -27,6 +28,7 @@ exports.signup = async (req, res, next) => {
     firstName: newUser.firstName,
     lastName: newUser.lastName,
     role: newUser.role,
+    // instituteSlug: institute?.slug,
     expires: Date.now() + JWT_EXPIRATION_MS,
   };
   const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
@@ -41,8 +43,9 @@ exports.signin = (req, res) => {
     email: user.email,
     firstName: user.firstName,
     lastName: user.lastName,
-    role: user.role,
-    expires: Date.now() + parseInt(JWT_EXPIRATION_MS), // the token will expire 15 minutes from when it's generated
+    role: newUser.role,
+    instituteSlug: null,
+    expires: Date.now() + JWT_EXPIRATION_MS,
   };
   const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
   res.json({ token });

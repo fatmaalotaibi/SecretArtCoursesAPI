@@ -9,5 +9,9 @@ Institute.hasMany(Course, {
   allowNull: false,
 });
 
+User.hasOne(Institute, { as: "institute", foreignKey: "userId" });
+
+Institute.belongsTo(User, { as: "user" });
+
 Course.belongsTo(Institute, { as: "institute" });
 module.exports = { Course, Institute, User };
