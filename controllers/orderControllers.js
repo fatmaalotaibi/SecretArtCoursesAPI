@@ -1,13 +1,12 @@
 exports.checkout = async (req, res, next) => {
   try {
     const newOrder = await Order.create({ userId: req.user.id });
-    res.status(201).json(newItem);
-    const orderItem = {
-      ...req.body,
+    const cart = req.body.map((item) => ({
+      ...item,
       orderId: newOrder.id,
-    };
-    const newItem = await OrderItem.create(orderItem);
-    res.json(newItem);
+    }));
+    const newOrderItems = await OrderItem.bulkCreate(cart);
+    res.status(201).json(newOrderItems);
   } catch (error) {
     next(error);
   }
