@@ -19,7 +19,7 @@ exports.signup = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-  // const institute = await Institute.findOne({ where: { userId: user.id } });
+  const institute = await Institute.findOne({ where: { userId: user.id } });
   const newUser = await User.create(req.body);
   const payload = {
     id: newUser.id,
@@ -28,7 +28,7 @@ exports.signup = async (req, res, next) => {
     firstName: newUser.firstName,
     lastName: newUser.lastName,
     role: newUser.role,
-    // instituteSlug: institute?.slug,
+    instituteSlug: institute ? institute.slug : null,
     expires: Date.now() + JWT_EXPIRATION_MS,
   };
   const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
