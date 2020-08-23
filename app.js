@@ -13,6 +13,7 @@ const { Course } = require("./db/models");
 const courseRoutes = require("./routes/courses");
 const instituteRoutes = require("./routes/institutes");
 const userRoutes = require("./routes/users");
+const orderRoutes = require("./routes/orders");
 
 //data
 let courses = require("./courses");
@@ -28,6 +29,7 @@ app.use("/courses", courseRoutes);
 app.use("/institutes", instituteRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));
 app.use(userRoutes);
+app.use(orderRoutes);
 
 // Passport Strategies
 const { localStrategy } = require("./middleware/passport");
