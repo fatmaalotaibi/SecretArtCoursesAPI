@@ -19,4 +19,7 @@ Course.belongsTo(Institute, { as: "institute" });
 User.hasMany(Order, { as: "orders", foreignKey: "userId" });
 Order.belongsTo(User, { as: "user" });
 
+Order.belongsToMany(Course, { through: "OrderItems" });
+Course.belongsToMany(Order, { through: "OrderItems" });
+
 module.exports = { Course, Institute, User, Order };
