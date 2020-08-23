@@ -2,6 +2,7 @@ const Course = require("./Course");
 const Institute = require("./Institute");
 const User = require("./User");
 const Order = require("./Order");
+const OrderItem = require("./OrderItem");
 
 // an institute has many courses
 Institute.hasMany(Course, {
@@ -19,7 +20,7 @@ Course.belongsTo(Institute, { as: "institute" });
 User.hasMany(Order, { as: "orders", foreignKey: "userId" });
 Order.belongsTo(User, { as: "user" });
 
-Order.belongsToMany(Course, { through: "OrderItems" });
-Course.belongsToMany(Order, { through: "OrderItems" });
+Order.belongsToMany(Course, { through: OrderItem, foreignKey: "orderId" });
+Course.belongsToMany(Order, { through: OrderItem, foreignKey: "courseId" });
 
-module.exports = { Course, Institute, User, Order };
+module.exports = { Course, Institute, User, Order, OrderItem };
